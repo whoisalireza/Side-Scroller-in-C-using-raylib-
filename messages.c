@@ -28,7 +28,7 @@ void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh, int *frame
 
         ClearBackground(BLACK);
 
-        DrawText("ERROR: Could not load Level.txt - \nLevel will be generated!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, WHITE);
+        DrawText("ERROR: Could not load Level.txt - \nLevel will be generated!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, RED);
         
         DrawRectangleLines((width*1/2)-(width*1/8), height*2/5, width*1/4, height*1/10, WHITE);
         DrawText("ESC) OK", (width*1/2)-(width*2/19), height*13/30, FONTSIZE, WHITE);

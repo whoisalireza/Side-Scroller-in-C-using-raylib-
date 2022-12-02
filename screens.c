@@ -2,13 +2,14 @@
 #include "raylib.h"
 #include "screens.h"
 
-
+// This screen is shown whenever you press the button for "key assignment"
 void keys(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
     int width = *breite;
     int height = *hoehe;
     int verhx = *xverh;
     int verhy = *yverh;
     int fps = *framesps;
+    //TODO make sense of this shit here and also where it is used
     int txtposl = width*1/4-MeasureText("Function", ((width/verhx)+(height/verhy))*0.2)*1/2;
     int txtposr = (width*1/2+width*3/16)-MeasureText("Key Assignment", ((width/verhx)+(height/verhy))*0.2)*3/4;
 
@@ -28,21 +29,25 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
         
         ClearBackground(BLACK);
         
-        DrawRectangleLines((width*1/2)-(width*3/8), (height*1/2)-(height*3/8), width*3/4, height*3/4, WHITE);
-        DrawLine(width*1/2, (height*1/2)-(height*3/8), width*1/2, (height*1/2)+(height*3/8), WHITE);
+        DrawRectangleLines(width*1/8, height*1/8, width*3/4, height*3/4, WHITE);       
+        DrawLine(width*1/2, height*1/8, width*1/2, (height*7/8), WHITE);
         //DrawLine(txtpos, (height*1/2)-(height*3/8), txtpos, (height*1/2)+(height*3/8), BLACK);
         
         //Linke Seite (Funktionen)
-        DrawText("function", width*1/4-(1/2)*MeasureText("function", ((width/verhx)+(height/verhy))*0.2), (height*1/2)-(height*5/16), FONTSIZE, WHITE);
-        DrawText("to the right", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("to the left", txtposl, (height*1/2)-(height*2/16), FONTSIZE, WHITE);
-        DrawText("jump", txtposl, (height*1/2)-(height*1/16), FONTSIZE, WHITE);
+        DrawText("function", ((width*1/8) + (width*3/16)) - MeasureText("function", FONTSIZE)*1/2, height*2/8, FONTSIZE, GREEN);
+        DrawText("\nto the right", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\nto the left", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\n\njump", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\n\n\nshow FPS", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\n\n\n\nExit/Back", txtposl, (height*1/2)-(height*3/16) , FONTSIZE, WHITE);
         
         //Rechte Seite (Key Assignment)
-        DrawText("Key Assignment", (width*1/2+width*3/16)-MeasureText("Key Assignment", ((width/verhx)+(height/verhy))*0.2)*1/2, (height*1/2)-(height*5/16), FONTSIZE, WHITE);
-        DrawText("LEFT", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("RIGHT", txtposr, (height*1/2)-(height*2/16), FONTSIZE, WHITE);
-        DrawText("UP", txtposr, (height*1/2)-(height*1/16), FONTSIZE, WHITE);
+        DrawText("Key Assignment", width*1/2 + width*3/16 - MeasureText("Key Assignment", FONTSIZE)*1/2, height*2/8, FONTSIZE, GREEN);
+        DrawText("\nLEFT", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\nRIGHT", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\n\nUP", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\n\n\nF1", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("\n\n\n\n\nESC", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
         
         EndDrawing();
     }
@@ -101,7 +106,7 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, 
 
 }
 
-
+// This screen shows when you won or lost a game.
 void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, double timer, bool victory){
     double timestamp = timer;
     int width = *breite;
@@ -143,16 +148,16 @@ void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesp
         }
         
         if(victory == true){
-            DrawText("Congratulations, you have Won!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, WHITE);
-            DrawText(TextFormat("Time = %lf", ((double)timestamp)), (width*1/3)-(width*1/10), height*6.8/23, (FONTSIZE) * 0.5, WHITE);
+            DrawText("Congratulations, you have Won!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, GREEN);
+            DrawText(TextFormat("Time = %lf", ((double)timestamp)), (width*1/3)-(width*1/10), height*6.8/23, (FONTSIZE) * 0.5, PINK);
             DrawText("1) Restart Game", (width*1/2)-(width*1/12), height*20/60, FONTSIZE, WHITE);
             DrawText("2) Key assignment", (width*1/2)-(width*2/19), height*30/60, FONTSIZE, WHITE);
             DrawText("3) Save Highscore", (width*1/2)-(width*2/19), height*40/60, FONTSIZE, WHITE);
             DrawText("ESC) Quit to Mainmenu", (width*1/2)-(width*1/9), height*50/60, FONTSIZE, WHITE);
 
         }else if(victory == false){
-            DrawText("Game over, yes you have lost!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, WHITE);
-            DrawText(TextFormat("Time = %lf", ((double)timestamp)), (width*1/3)-(width*1/10), height*6.8/23, (FONTSIZE) * 0.5, WHITE);
+            DrawText("Game over, yes you have lost!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, RED);
+            DrawText(TextFormat("Time = %lf", ((double)timestamp)), (width*1/3)-(width*1/10), height*6.8/23, (FONTSIZE) * 0.5, PINK);
             DrawText("1) Restart Game", (width*1/2)-(width*1/12), height*13.6/30, FONTSIZE, WHITE);
             DrawText("2) Key assignment", (width*1/2)-(width*2/19), height*19/30, FONTSIZE, WHITE);
             DrawText("ESC) Quit to Mainmenu", (width*1/2)-(width*1/9), height*24/30, FONTSIZE, WHITE);
