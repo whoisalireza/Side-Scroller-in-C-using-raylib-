@@ -8,3 +8,5 @@ game.exe
 level.txt
 main.code-workspace
 project.zip
+Makefile
+Makefile.Android

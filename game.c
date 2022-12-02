@@ -83,7 +83,7 @@ void Game(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
     
-    SetTargetFPS(fps);
+    //SetTargetFPS(fps);
     while(!WindowShouldClose()){     
         
         //timer start erst wenn ein key gedrückt ist
