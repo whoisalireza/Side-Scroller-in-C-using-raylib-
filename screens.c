@@ -9,14 +9,27 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
     int verhx = *xverh;
     int verhy = *yverh;
     int fps = *framesps;
-    //TODO make sense of this shit here and also where it is used
-    int txtposl = width*1/4-MeasureText("Function", ((width/verhx)+(height/verhy))*0.2)*1/2;
-    int txtposr = (width*1/2+width*3/16)-MeasureText("Key Assignment", ((width/verhx)+(height/verhy))*0.2)*3/4;
 
     mode = 0;
     
     SetTargetFPS(fps);
+
+    //Some pre calculated standard dimensions for the screen (rectangle, centering etc.)
+    int rectangleX = width*1/8;
+    int rectangleY = height*1/8;
+    int rectangle_width = width*3/4;
+    int rectangle_height = height*3/4;
+    int rectangle_quarter_width = width*3/16;
+    int rectangle_quarter_height = height*3/16;
+
+    int center_screenX = width*1/2;
+    int rectangle_center_line_Y = height*7/8;
+
+    int txtposl = rectangleX + width*1/16;
+    int txtposr = center_screenX + width*1/16;
+    int txtY    = rectangleY + height*1/6;
     
+    //Loop
     while(!WindowShouldClose()){
         BeginDrawing();
 
@@ -29,25 +42,25 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
         
         ClearBackground(BLACK);
         
-        DrawRectangleLines(width*1/8, height*1/8, width*3/4, height*3/4, WHITE);       
-        DrawLine(width*1/2, height*1/8, width*1/2, (height*7/8), WHITE);
+        DrawRectangleLines(rectangleX, rectangleY, rectangle_width, rectangle_height, WHITE);       
+        DrawLine(center_screenX, rectangleY, center_screenX, rectangle_center_line_Y, WHITE);
         //DrawLine(txtpos, (height*1/2)-(height*3/8), txtpos, (height*1/2)+(height*3/8), BLACK);
         
         //Linke Seite (Funktionen)
-        DrawText("function", ((width*1/8) + (width*3/16)) - MeasureText("function", FONTSIZE)*1/2, height*2/8, FONTSIZE, GREEN);
-        DrawText("\nto the right", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\nto the left", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\n\njump", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\n\n\nshow FPS", txtposl, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\n\n\n\nExit/Back", txtposl, (height*1/2)-(height*3/16) , FONTSIZE, WHITE);
+        DrawText("Function", rectangleX + rectangle_quarter_width - MeasureText("Function", FONTSIZE)*1/2, rectangleY + height*3/24, FONTSIZE, GREEN);
+        DrawText("\nTo the right", txtposl, txtY, FONTSIZE, WHITE);
+        DrawText("\n\nTo the left", txtposl, txtY, FONTSIZE, WHITE);
+        DrawText("\n\n\nJump", txtposl, txtY, FONTSIZE, WHITE);
+        DrawText("\n\n\n\nShow FPS", txtposl, txtY, FONTSIZE, WHITE);
+        DrawText("\n\n\n\n\nExit/Back", txtposl, txtY, FONTSIZE, WHITE);
         
         //Rechte Seite (Key Assignment)
-        DrawText("Key Assignment", width*1/2 + width*3/16 - MeasureText("Key Assignment", FONTSIZE)*1/2, height*2/8, FONTSIZE, GREEN);
-        DrawText("\nLEFT", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\nRIGHT", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\n\nUP", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\n\n\nF1", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
-        DrawText("\n\n\n\n\nESC", txtposr, (height*1/2)-(height*3/16), FONTSIZE, WHITE);
+        DrawText("Key Assignment", center_screenX + rectangle_quarter_width - MeasureText("Key Assignment", FONTSIZE)*1/2, rectangleY + height*3/24, FONTSIZE, GREEN);
+        DrawText("\nLEFT/A", txtposr, txtY, FONTSIZE, WHITE);
+        DrawText("\n\nRIGHT/D", txtposr, txtY, FONTSIZE, WHITE);
+        DrawText("\n\n\nUP/W", txtposr, txtY, FONTSIZE, WHITE);
+        DrawText("\n\n\n\nF1", txtposr, txtY, FONTSIZE, WHITE);
+        DrawText("\n\n\n\n\nESC", txtposr, txtY, FONTSIZE, WHITE);
         
         EndDrawing();
     }
@@ -55,8 +68,6 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
 
 //"Save screen" This screen shows after you have decided to save your progress.
 void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, double timestamp){
-    mode = 0;
-
     int width = *breite;
     int height = *hoehe;
     int verhx = *xverh;
@@ -66,6 +77,18 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, 
 
     time_t curtime;
     struct tm *loc_time;
+
+    mode = 0;
+
+    //Pre calculated dimensions for buttons and texts etc.
+    int center_screenX = width*1/2;
+    int center_screenY = height*1/2;
+    int button1_text_size = MeasureText("Enter) OK", FONTSIZE);
+    int button1_text_X = center_screenX - button1_text_size*1/2;
+    int button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
+    int button1_Y = center_screenY - height*1/36;
+    int button1_width = button1_text_size + width*1/18;
+    int button1_height = FONTSIZE + height*1/18;
  
     //Getting current time of system
     curtime = time (NULL);
@@ -83,7 +106,7 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, 
 
     SetTargetFPS(fps);
 
-    while(!WindowShouldClose()){
+    while(!IsKeyPressed(KEY_ENTER)){
 
     BeginDrawing();
 
@@ -96,10 +119,10 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, 
 
     ClearBackground(BLACK);
 
-    DrawText("PROGRESS SAVED", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, RED);
+    DrawText("PROGRESS SAVED", center_screenX - MeasureText("PROGRESS SAVED", (FONTSIZE) * 1.5)*1/2, height*1/4, (FONTSIZE) * 1.5, RED);
         
-    DrawRectangleLines((width*1/2)-(width*1/8), height*2/5, width*1/4, height*1/10, WHITE);
-    DrawText("ESC) OK", (width*1/2)-(width*2/19), height*13/30, FONTSIZE, WHITE);
+    DrawRectangleLines(button1_X, button1_Y, button1_width, button1_height, WHITE);
+    DrawText("Enter) OK", button1_text_X, center_screenY, FONTSIZE, WHITE);
         
     EndDrawing();
     }
