@@ -12,7 +12,7 @@ extern int showfps;
 extern FILE* level;
 extern FILE* output;
 
-void messageLoadFail(int*, int*, int*, int*, int*);
-void messageLoad(int*, int*, int*, int*, int*);
+void messageLoadFail(int*, int*, int*, int*);
+void messageLoad(int*, int*, int*, int*);
 
 #endif

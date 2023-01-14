@@ -12,8 +12,8 @@ extern int showfps;
 extern FILE* level;
 extern FILE* output;
 
-void keys(int*, int*, int*, int*, int*);
-void saveScreen(int*, int*, int*, int*, int*, double);
-void VictoryScreen(int*, int*, int*, int*, int*, double, bool);
+void keys(int*, int*, int*, int*);
+void saveScreen(int*, int*, int*, int*, double);
+void VictoryScreen(int*, int*, int*, int*, double, bool);
 
 #endif

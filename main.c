@@ -46,20 +46,20 @@ int main(){
 
         switch(mode){
             case 1:
-            messageLoad(&width, &height, &verhx, &verhy, &fps);
-            Game(&width, &height, &verhx, &verhy, &fps);
+            messageLoad(&width, &height, &verhx, &verhy);
+            Game(&width, &height, &verhx, &verhy);
             continue;
             case 2:
-            keys(&width, &height, &verhx, &verhy, &fps);
+            keys(&width, &height, &verhx, &verhy);
             continue;
             case 3:
-            VictoryScreen(&width, &height, &verhx, &verhy, &fps, timer, false);
+            VictoryScreen(&width, &height, &verhx, &verhy, timer, false);
             continue;
             case 4:
-            VictoryScreen(&width, &height, &verhx, &verhy, &fps, timer, true);
+            VictoryScreen(&width, &height, &verhx, &verhy, timer, true);
             continue;
             case 5:
-            saveScreen(&width, &height, &verhx, &verhy, &fps, timer);
+            saveScreen(&width, &height, &verhx, &verhy, timer);
             continue;
             }
         

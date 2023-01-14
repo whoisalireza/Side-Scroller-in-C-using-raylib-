@@ -3,17 +3,15 @@
 #include "messages.h"
 
 //"Failed to load level" screen. Shows if the program fails to find, read or just load the level.txt level file.
-void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
-    int width = *breite;
-    int height = *hoehe;
-    int verhx = *xverh;
-    int verhy = *yverh;
-    int fps = *framesps;
+void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh){
+    int width   = *breite;
+    int height  = *hoehe;
+    int verhx   = *xverh;
+    int verhy   = *yverh;
 
     mode = 0;
     load = 0;
 
-    SetTargetFPS(fps);
 
     while(!WindowShouldClose()){
 
@@ -38,25 +36,23 @@ void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh, int *frame
 }
 
 //"Load level" screen. Asks you if you want to load a level from the level.txt file or to generate one.
-void messageLoad(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
-    int width = *breite;
-    int height = *hoehe;
-    int verhx = *xverh;
-    int verhy = *yverh;
-    int fps = *framesps;
+void messageLoad(int *breite, int *hoehe, int *xverh, int *yverh){
+    int width   = *breite;
+    int height  = *hoehe;
+    int verhx   = *xverh;
+    int verhy   = *yverh;
 
     mode = 0;
     load = 0;
 
-    SetTargetFPS(fps);
 
-    while(!WindowShouldClose()){
+    while(1){
 
         if(IsKeyPressed(KEY_Z)){
             load = 1;
             level = fopen("level.txt", "r");
             if(level == NULL){
-            messageLoadFail(&width, &height, &verhx, &verhy, &fps);
+            messageLoadFail(&width, &height, &verhx, &verhy);
             load = 0;
             }
             return;

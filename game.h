@@ -12,6 +12,6 @@ extern int showfps;
 extern FILE* level;
 extern FILE* output;
 
-void Game(int*, int*, int*, int*, int*);
+void Game(int*, int*, int*, int*);
 
 #endif

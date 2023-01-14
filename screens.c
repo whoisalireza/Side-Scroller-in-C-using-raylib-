@@ -1,18 +1,18 @@
+
 #include <stdio.h>
+#include <string.h>
 #include "raylib.h"
 #include "screens.h"
 
+
 // This screen is shown whenever you press the button for "key assignment"
-void keys(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
-    int width = *breite;
-    int height = *hoehe;
-    int verhx = *xverh;
-    int verhy = *yverh;
-    int fps = *framesps;
+void keys(int *breite, int *hoehe, int *xverh, int *yverh){
+    int width   = *breite;
+    int height  = *hoehe;
+    int verhx   = *xverh;
+    int verhy   = *yverh;
 
     mode = 0;
-    
-    SetTargetFPS(fps);
 
     //Some pre calculated standard dimensions for the screen (rectangle, centering etc.)
     int rectangleX = width*1/8;
@@ -67,12 +67,11 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
 }
 
 //"Save screen" This screen shows after you have decided to save your progress.
-void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, double timestamp){
-    int width = *breite;
-    int height = *hoehe;
-    int verhx = *xverh;
-    int verhy = *yverh;
-    int fps = *framesps;
+void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestamp){
+    int width   = *breite;
+    int height  = *hoehe;
+    int verhx   = *xverh;
+    int verhy   = *yverh;
     double printtime = timestamp;
 
     time_t curtime;
@@ -104,7 +103,6 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, 
     fprintf(output, "%s Your Time: %lf\n\n\n", datetime, printtime);
     fclose(output);
 
-    SetTargetFPS(fps);
 
     while(!IsKeyPressed(KEY_ENTER)){
 
@@ -130,18 +128,29 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, 
 }
 
 // This screen shows when you won or lost a game.
-void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps, double timer, bool victory){
+void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timer, bool victory){
     double timestamp = timer;
-    int width = *breite;
-    int height = *hoehe;
-    int verhx = *xverh;
-    int verhy = *yverh;
-    int fps = *framesps;
+    int width   = *breite;
+    int height  = *hoehe;
+    int verhx   = *xverh;
+    int verhy   = *yverh;
 
     mode = 0;
 
-    SetTargetFPS(fps);
+    //Pre calculated dimensions for buttons and texts etc.
+    int center_screenX = width*1/2;
+    int center_screenY = height*1/2;
     
+    int text_win    = center_screenX - MeasureText("Congratulations, you have Won!", (FONTSIZE) * 1.5)*1/2;
+    int text_lose   = center_screenX - MeasureText("Game over, yes you have lost!", (FONTSIZE) * 1.5)*1/2;
+    int time_X  = center_screenX - MeasureText(TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE) * 1.5)*1/2;
+   /*  int button1 = MeasureText("1) Restart game", FONTSIZE);
+    int button2 = MeasureText("2) Key Assignment", FONTSIZE);
+    int button3 = MeasureText("3) Save Highscore", FONTSIZE);
+    int buttonESC = MeasureText("ESC) Quit to main menu", FONTSIZE);
+     */
+    int txtposx =  width*1/8;
+    int txtposy = height*1/4;
 
     
     while(!WindowShouldClose()){
@@ -150,7 +159,7 @@ void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesp
             mode = 1;
             return;
         }else if(IsKeyPressed(KEY_TWO)){
-            keys(&width, &height, &verhx, &verhy, &fps);
+            keys(&width, &height, &verhx, &verhy);
         }
         if(victory == true){
             if(IsKeyPressed(KEY_THREE)){
@@ -171,19 +180,19 @@ void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, int *framesp
         }
         
         if(victory == true){
-            DrawText("Congratulations, you have Won!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, GREEN);
-            DrawText(TextFormat("Time = %lf", ((double)timestamp)), (width*1/3)-(width*1/10), height*6.8/23, (FONTSIZE) * 0.5, PINK);
-            DrawText("1) Restart Game", (width*1/2)-(width*1/12), height*20/60, FONTSIZE, WHITE);
-            DrawText("2) Key assignment", (width*1/2)-(width*2/19), height*30/60, FONTSIZE, WHITE);
-            DrawText("3) Save Highscore", (width*1/2)-(width*2/19), height*40/60, FONTSIZE, WHITE);
-            DrawText("ESC) Quit to Mainmenu", (width*1/2)-(width*1/9), height*50/60, FONTSIZE, WHITE);
+            DrawText("Congratulations, you have Won!", text_win, txtposy, (FONTSIZE) * 1.5, GREEN);
+            DrawText(TextFormat("\nTime = %lf", ((double)timestamp)), time_X, txtposy, (FONTSIZE)* 1.5, PINK);
+            DrawText("\n\n1) Restart Game", txtposx, txtposy, FONTSIZE, WHITE);
+            DrawText("\n\n\n2) Key assignment", txtposx, txtposy, FONTSIZE, WHITE);
+            DrawText("\n\n\n\n3) Save Highscore", txtposx, txtposy, FONTSIZE, WHITE);
+            DrawText("\n\n\n\n\nESC) Quit to Mainmenu", txtposx, txtposy, FONTSIZE, WHITE);
 
         }else if(victory == false){
-            DrawText("Game over, yes you have lost!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, RED);
-            DrawText(TextFormat("Time = %lf", ((double)timestamp)), (width*1/3)-(width*1/10), height*6.8/23, (FONTSIZE) * 0.5, PINK);
-            DrawText("1) Restart Game", (width*1/2)-(width*1/12), height*13.6/30, FONTSIZE, WHITE);
-            DrawText("2) Key assignment", (width*1/2)-(width*2/19), height*19/30, FONTSIZE, WHITE);
-            DrawText("ESC) Quit to Mainmenu", (width*1/2)-(width*1/9), height*24/30, FONTSIZE, WHITE);
+            DrawText("Game over, yes you have lost!\n", text_lose, txtposy, (FONTSIZE) * 1.5, RED);
+            DrawText(TextFormat("\nTime = %lf", ((double)timestamp)), time_X, txtposy, (FONTSIZE) * 1.5, PINK);
+            DrawText("\n\n1) Restart Game", txtposx, txtposy, FONTSIZE, WHITE);
+            DrawText("\n\n\n2) Key assignment", txtposx, txtposy, FONTSIZE, WHITE);
+            DrawText("\n\n\n\nESC) Quit to Mainmenu", txtposx, txtposy, FONTSIZE, WHITE);
         }
         
         EndDrawing();

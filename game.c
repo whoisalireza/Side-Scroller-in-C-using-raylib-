@@ -1,15 +1,15 @@
+
 #include <stdio.h>
 #include "raylib.h"
 #include "game.h"
 
 
-void Game(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
-    int width = *breite;
-    int height = *hoehe;
-    int verhx = *xverh;
-    int verhy = *yverh;
-    int fps = *framesps;
-    int jcount = 0;
+void Game(int *breite, int *hoehe, int *xverh, int *yverh){
+    int width   = *breite;
+    int height  = *hoehe;
+    int verhx   = *xverh;
+    int verhy   = *yverh;
+    int jcount  = 0;
     int pressed_button = 1;
     timer = 0.000000000;
     
@@ -78,12 +78,12 @@ void Game(int *breite, int *hoehe, int *xverh, int *yverh, int *framesps){
     Rectangle finish = {spacing, height*1/8, width*1/8, height*1/8};
     
     Camera2D camera = { 0 };
-    camera.target = (Vector2){ oldplayerx + 20, oldplayery + 20 };
-    camera.offset = (Vector2){ width/2, height/2 };
+    camera.target   = (Vector2){ oldplayerx + 20, oldplayery + 20 };
+    camera.offset   = (Vector2){ width/2, height/2 };
     camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
+    camera.zoom     = 1.0f;
     
-    //SetTargetFPS(fps);
+    
     while(!WindowShouldClose()){     
         
         //timer start erst wenn ein key gedrückt ist
