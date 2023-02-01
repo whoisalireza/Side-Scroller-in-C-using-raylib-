@@ -1,5 +1,9 @@
 # Side-Scroller-in-C-using-raylib-
+
+- OLD DESCRIPTION BEGIN -
 Another small project for uni. A flappy bird like side scroller, which is not finished however.
+- OLD DESCRIPTION END -
+
 
 This project is long not just a project for the university anymore. I try to make this my first ever game.
 I want to make it a side-scroller/platformer with certain levels that play like flappy bird.
