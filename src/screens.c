@@ -73,6 +73,7 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestam
     int verhx   = *xverh;
     int verhy   = *yverh;
     double printtime = timestamp;
+    bool saved = false; //bool to know if saving was succesful or not, set to false by default so that we can be 100% sure that the highscore was written, if it was written.
 
     time_t curtime;
     struct tm *loc_time;
@@ -99,10 +100,13 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestam
     printf("%s", asctime (loc_time));
     char *datetime = asctime(loc_time);
 
-    output = fopen("Highscores.txt", "a");
-    fprintf(output, "%s Your Time: %lf\n\n\n", datetime, printtime);
-    fclose(output);
-
+    if(output = fopen("Highscores.txt", "a")){ //check to see if the file can be opened
+        fprintf(output, "%s Your Time: %lf\n\n\n", datetime, printtime);
+        fclose(output);
+        saved = true; //highscore was  written, close the file and set the bool to true
+    }else{
+        saved = false;//something went wrong, highscore was not written, set bool to false
+    }
 
     while(!IsKeyPressed(KEY_ENTER)){
 
@@ -117,12 +121,22 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestam
 
     ClearBackground(BLACK);
 
-    DrawText("PROGRESS SAVED", center_screenX - MeasureText("PROGRESS SAVED", (FONTSIZE) * 1.5)*1/2, height*1/4, (FONTSIZE) * 1.5, RED);
-        
-    DrawRectangleLines(button1_X, button1_Y, button1_width, button1_height, WHITE);
-    DrawText("Enter) OK", button1_text_X, center_screenY, FONTSIZE, WHITE);
-        
-    EndDrawing();
+    if(saved == true){
+        DrawText("PROGRESS SAVED", center_screenX - MeasureText("PROGRESS SAVED", (FONTSIZE) * 1.5)*1/2, height*1/4, (FONTSIZE) * 1.5, GREEN);
+            
+        DrawRectangleLines(button1_X, button1_Y, button1_width, button1_height, WHITE);
+        DrawText("Enter) OK", button1_text_X, center_screenY, FONTSIZE, WHITE);
+            
+        EndDrawing();
+    }else{
+        DrawText("ERROR: PROGRESS NOT SAVED", center_screenX - MeasureText("ERROR: PROGRESS NOT SAVED", (FONTSIZE) * 1.5)*1/2, height*1/4, (FONTSIZE) * 1.5, RED);
+        DrawText("\nHighscore.txt could not be created, opened or written to.", center_screenX - MeasureText("Highscore.txt could not be created, opened or written to.", FONTSIZE)*1/2, height*1/4, FONTSIZE, RED);
+            
+        DrawRectangleLines(button1_X, button1_Y, button1_width, button1_height, WHITE);
+        DrawText("Enter) OK", button1_text_X, center_screenY, FONTSIZE, WHITE);
+            
+        EndDrawing();
+    }
     }
 
 }
@@ -144,11 +158,6 @@ void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timer
     int text_win    = center_screenX - MeasureText("Congratulations, you have Won!", (FONTSIZE) * 1.5)*1/2;
     int text_lose   = center_screenX - MeasureText("Game over, yes you have lost!", (FONTSIZE) * 1.5)*1/2;
     int time_X  = center_screenX - MeasureText(TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE) * 1.5)*1/2;
-   /*  int button1 = MeasureText("1) Restart game", FONTSIZE);
-    int button2 = MeasureText("2) Key Assignment", FONTSIZE);
-    int button3 = MeasureText("3) Save Highscore", FONTSIZE);
-    int buttonESC = MeasureText("ESC) Quit to main menu", FONTSIZE);
-     */
     int txtposx =  width*1/8;
     int txtposy = height*1/4;
 
@@ -180,19 +189,19 @@ void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timer
         }
         
         if(victory == true){
-            DrawText("Congratulations, you have Won!", text_win, txtposy, (FONTSIZE) * 1.5, GREEN);
+            DrawText("Congratulations, you have Won!", text_win, txtposy, (FONTSIZE) * 1.5, GOLD);
             DrawText(TextFormat("\nTime = %lf", ((double)timestamp)), time_X, txtposy, (FONTSIZE)* 1.5, PINK);
             DrawText("\n\n1) Restart Game", txtposx, txtposy, FONTSIZE, WHITE);
             DrawText("\n\n\n2) Key assignment", txtposx, txtposy, FONTSIZE, WHITE);
             DrawText("\n\n\n\n3) Save Highscore", txtposx, txtposy, FONTSIZE, WHITE);
-            DrawText("\n\n\n\n\nESC) Quit to Mainmenu", txtposx, txtposy, FONTSIZE, WHITE);
+            DrawText("\n\n\n\n\nESC) Quit to Mainmenu", txtposx, txtposy, FONTSIZE, ORANGE);
 
         }else if(victory == false){
             DrawText("Game over, yes you have lost!\n", text_lose, txtposy, (FONTSIZE) * 1.5, RED);
             DrawText(TextFormat("\nTime = %lf", ((double)timestamp)), time_X, txtposy, (FONTSIZE) * 1.5, PINK);
             DrawText("\n\n1) Restart Game", txtposx, txtposy, FONTSIZE, WHITE);
             DrawText("\n\n\n2) Key assignment", txtposx, txtposy, FONTSIZE, WHITE);
-            DrawText("\n\n\n\nESC) Quit to Mainmenu", txtposx, txtposy, FONTSIZE, WHITE);
+            DrawText("\n\n\n\nESC) Quit to Mainmenu", txtposx, txtposy, FONTSIZE, ORANGE);
         }
         
         EndDrawing();

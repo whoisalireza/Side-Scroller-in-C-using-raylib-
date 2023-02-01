@@ -123,7 +123,7 @@ void Game(int *breite, int *hoehe, int *xverh, int *yverh){
         BeginDrawing();
         
         //show players x position in lower left corner (complete left is zero)
-        DrawText(TextFormat("Time = %f", ((float)timer)), 10, 1000, FONTSIZE, WHITE); 
+        DrawText(TextFormat("Time = %f", ((float)timer)), 10, 1000, FONTSIZE, PINK); 
 
         if(IsKeyPressed(KEY_F1)){
             showfps *= (-1);

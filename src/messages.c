@@ -12,6 +12,16 @@ void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh){
     mode = 0;
     load = 0;
 
+    //Pre calculated dimensions for buttons and texts etc.
+    int center_screenX = width*1/2;
+    int center_screenY = height*1/2;
+    int button1_text_size = MeasureText("Enter) OK", FONTSIZE);
+    int button1_text_X = center_screenX - button1_text_size*1/2;
+    int button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
+    int button1_Y = center_screenY - height*1/36;
+    int button1_width = button1_text_size + width*1/18;
+    int button1_height = FONTSIZE + height*1/18;
+
 
     while(!WindowShouldClose()){
 
@@ -26,11 +36,12 @@ void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh){
 
         ClearBackground(BLACK);
 
-        DrawText("ERROR: Could not load Level.txt - \nLevel will be generated!", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, RED);
-        
-        DrawRectangleLines((width*1/2)-(width*1/8), height*2/5, width*1/4, height*1/10, WHITE);
-        DrawText("ESC) OK", (width*1/2)-(width*2/19), height*13/30, FONTSIZE, WHITE);
-        
+        DrawText("ERROR: Could not load Level.txt", center_screenX - MeasureText("ERROR: Could not load Level.txt", (FONTSIZE) * 1.5)*1/2, height*1/4, (FONTSIZE) * 1.5, RED);
+        DrawText("\nLevel will be generated!", center_screenX - MeasureText("Level will be generated!", FONTSIZE)*1/2, height*1/4, FONTSIZE, RED);
+            
+        DrawRectangleLines(button1_X, button1_Y, button1_width, button1_height, WHITE);
+        DrawText("ESC) OK", button1_text_X, center_screenY, FONTSIZE, WHITE);
+            
         EndDrawing();
     }
 }
@@ -44,7 +55,14 @@ void messageLoad(int *breite, int *hoehe, int *xverh, int *yverh){
 
     mode = 0;
     load = 0;
-
+    
+    //Pre calculated dimensions for buttons and texts etc.
+    int center_screenX = width*1/2;
+    int center_screenY = height*1/2;
+    
+    int text    = center_screenX - MeasureText("Do you want to Load a Level or generate one?", (FONTSIZE) * 1.5)*1/2;
+    int txtposx =  width*1/8;
+    int txtposy = height*1/3;
 
     while(1){
 
@@ -71,14 +89,9 @@ void messageLoad(int *breite, int *hoehe, int *xverh, int *yverh){
         }
 
         ClearBackground(BLACK);
-
-        DrawText("Do you want to Load a Level\nor generate one?", (width*1/3)-(width*1/10), height*6.8/30, (FONTSIZE) * 1.5, WHITE);
-        
-        DrawRectangleLines((width*1/2)-(width*1/8), height*2/5, width*1/4, height*1/10, WHITE);
-        DrawText("Y) Load", (width*1/2)-(width*2/19), height*13/30, FONTSIZE, WHITE);
-        
-        DrawRectangleLines((width*1/2)-(width*1/10), height*3/5, width*1/5, height*1/10, WHITE);
-        DrawText("N) Generate", (width*1/2)-(width*21/224), height*19/30, FONTSIZE, WHITE);
+        DrawText("Do you want to Load a Level or generate one?", text, txtposy, (FONTSIZE) * 1.5, PURPLE);
+        DrawText("\n\nY) Load", txtposx, txtposy, FONTSIZE, WHITE);
+        DrawText("\n\n\nN) Generate", txtposx, txtposy, FONTSIZE, WHITE);
         
         EndDrawing();
     }

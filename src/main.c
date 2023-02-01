@@ -8,13 +8,19 @@
 #include "screens.h"
 #include "messages.h"
 
+// TODO
+//- Standardize the game world...
+//- Made the messageLoad() function end only when Y) or N) is selected. However, hitting ESC before Y) or N) is still a problem as it is with the whole game...
+//- Fix button input bufferings
+
 
 #define FONTSIZE ((width/verhx)+(height/verhy))*0.2
 #define MAX_OBSTACLES 1000
 #define MAX_GENOBSTACLES 10
 
-int showfps = 1;
-int mode = 0;
+// GLOBALS
+int showfps = 1;            //switch for showing fps counter everywhere in the game
+int mode = 0;               //switch for the main game engine. depending on the value of this variable, the game goes into different screens or starts the game. 
 int load = 0;
 float timer = 0.00000000;
 
@@ -32,6 +38,14 @@ int main(){
     InitWindow(width, height, "SideScroller v0.1 Alpha");
     
     SetTargetFPS(fps);
+
+    //Pre calculated dimensions for buttons and texts etc.
+    int center_screenX = width*1/2;
+    int center_screenY = height*1/2;
+    
+    int text    = center_screenX - MeasureText("SideScroller v0.1 Alpha", (FONTSIZE) * 1.5)*1/2;
+    int txtposx =  width*1/8;
+    int txtposy = height*1/3;
     
     while(!WindowShouldClose()){
         BeginDrawing();
@@ -44,22 +58,23 @@ int main(){
             mode = 2; //keys(&width, &height, &verhx, &verhy, &fps);
         }
 
+        //main game engine, implemented using a switch. 
         switch(mode){
             case 1:
-            messageLoad(&width, &height, &verhx, &verhy);
+            messageLoad(&width, &height, &verhx, &verhy);   //mode = 1: player chose to start the game 
             Game(&width, &height, &verhx, &verhy);
             continue;
             case 2:
-            keys(&width, &height, &verhx, &verhy);
+            keys(&width, &height, &verhx, &verhy);  //mode = 2: player wishes to view the controls, implemented througg the keys() function
             continue;
             case 3:
-            VictoryScreen(&width, &height, &verhx, &verhy, timer, false);
+            VictoryScreen(&width, &height, &verhx, &verhy, timer, false);   //mode = 3: the player failed/died etc. and now the game over screen will be displayed, implemented through a single VictoryScreen() function with the last boolean paramter set to false: Victory = false. 
             continue;
             case 4:
-            VictoryScreen(&width, &height, &verhx, &verhy, timer, true);
+            VictoryScreen(&width, &height, &verhx, &verhy, timer, true);    //mode = 4: same as above but with the boolean set to true: Victory = true. Thus a victory screen is presented instead of a game over screen.
             continue;
             case 5:
-            saveScreen(&width, &height, &verhx, &verhy, timer);
+            saveScreen(&width, &height, &verhx, &verhy, timer); //mode = 5: the save screen, displayed if the player decides to save their highscore after the VictoryScreen(). 
             continue;
             }
         
@@ -68,16 +83,10 @@ int main(){
         }
         
         ClearBackground(BLACK);
-        
-        DrawRectangleLines((width*1/2)-(width*1/10), height*1/5, width*1/5, height*1/10, WHITE);
-        DrawText("1) Start Game", (width*1/2)-(width*1/12), height*6.8/30, FONTSIZE, WHITE);
-        
-        DrawRectangleLines((width*1/2)-(width*1/8), height*2/5, width*1/4, height*1/10, WHITE);
-        DrawText("2) Key assignment", (width*1/2)-(width*2/19), height*13/30, FONTSIZE, WHITE);
-        
-        DrawRectangleLines((width*1/2)-(width*1/10), height*3/5, width*1/5, height*1/10, WHITE);
-        DrawText("ESC) Quit Game", (width*1/2)-(width*21/224), height*19/30, FONTSIZE, WHITE);
-        
+        DrawText("SideScroller v0.1 Alpha", text, txtposy, (FONTSIZE) * 1.5, GOLD);
+        DrawText("\n\n1) Start Game", txtposx, txtposy, FONTSIZE, SKYBLUE);
+        DrawText("\n\n\n2) Key assignment", txtposx, txtposy, FONTSIZE, SKYBLUE);
+        DrawText("\n\n\n\nESC) Quit Game", txtposx, txtposy, FONTSIZE, ORANGE);
         
         EndDrawing();
 
