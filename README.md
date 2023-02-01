@@ -1,6 +1,7 @@
 # Side-Scroller-in-C-using-raylib-
 
 - OLD DESCRIPTION BEGIN -
+
 Another small project for uni. A flappy bird like side scroller, which is not finished however.
 - OLD DESCRIPTION END -
 
