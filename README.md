@@ -20,8 +20,11 @@ if this project even works on Linux/UNIX based systems.
 # Usage of level.txt:
 
 "*" = high block
+
 "-" = middle block (the only challenge in this came until now.. xD
+
 "_" = low block
+
 "." = win block (neededs to be present and touched, otherwise game can not finish)
 
 You can create your own level which by default supports up to 1000 blocks, anything above that will be ignored by the game
