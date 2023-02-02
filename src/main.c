@@ -9,6 +9,7 @@
 #include "messages.h"
 
 // TODO
+//- Clean the pre calculated standardization and values, since they have to be calculated in the loop anyway because of resizability...
 //- Standardize the game world...
 //- Made the messageLoad() function end only when Y) or N) is selected. However, hitting ESC before Y) or N) is still a problem as it is with the whole game...
 //- Fix button input bufferings
@@ -121,10 +122,10 @@ int main(){
             width = GetScreenWidth();
             height = GetScreenHeight();
             updateWindowSizeVars(width, height);
-            text    = center_screenX - MeasureText("SideScroller v0.1 Alpha", (FONTSIZE) * 1.5)*1/2;
-            txtposx =  width*1/8;
-            txtposy = height*1/3;
         }
+        text    = center_screenX - MeasureText("SideScroller v0.1 Alpha", (FONTSIZE) * 1.5)*1/2;
+        txtposx =  width*1/8;
+        txtposy = height*1/3;
 
         
         //Text to be drawn

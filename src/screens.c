@@ -38,17 +38,18 @@ void keys(){
             width = GetScreenWidth();
             height = GetScreenHeight();
             updateWindowSizeVars(width, height);
-            rectangleX = width*1/8;
-            rectangleY = height*1/8;
-            rectangle_width = width*3/4;
-            rectangle_height = height*3/4;
-            rectangle_quarter_width = width*3/16;
-            rectangle_quarter_height = height*3/16;
-            rectangle_center_line_Y = height*7/8;
-            txtposl = rectangleX + width*1/16;
-            txtposr = center_screenX + width*1/16;
-            txtY    = rectangleY + height*1/6;
         }
+        rectangleX = width*1/8;
+        rectangleY = height*1/8;
+        rectangle_width = width*3/4;
+        rectangle_height = height*3/4;
+        rectangle_quarter_width = width*3/16;
+        rectangle_quarter_height = height*3/16;
+        rectangle_center_line_Y = height*7/8;
+        txtposl = rectangleX + width*1/16;
+        txtposr = center_screenX + width*1/16;
+        txtY    = rectangleY + height*1/6;
+
         
         ClearBackground(BLACK);
         
@@ -129,13 +130,13 @@ void saveScreen(double timestamp){
         width = GetScreenWidth();
         height = GetScreenHeight();
         updateWindowSizeVars(width, height);
-        button1_text_size = MeasureText("Enter) OK", FONTSIZE);
-        button1_text_X = center_screenX - button1_text_size*1/2;
-        button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
-        button1_Y = center_screenY - height*1/36;
-        button1_width = button1_text_size + width*1/18;
-        button1_height = FONTSIZE + height*1/18;
     }
+    button1_text_size = MeasureText("Enter) OK", FONTSIZE);
+    button1_text_X = center_screenX - button1_text_size*1/2;
+    button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
+    button1_Y = center_screenY - height*1/36;
+    button1_width = button1_text_size + width*1/18;
+    button1_height = FONTSIZE + height*1/18;
 
     ClearBackground(BLACK);
 
@@ -197,14 +198,14 @@ void VictoryScreen(double timer, bool victory){
             width = GetScreenWidth();
             height = GetScreenHeight();
             updateWindowSizeVars(width, height);
-            center_screenX = width*1/2;
-            center_screenY = height*1/2;
-            text_win    = center_screenX - MeasureText("Congratulations, you have Won!", (FONTSIZE) * 1.5)*1/2;
-            text_lose   = center_screenX - MeasureText("Game over, yes you have lost!", (FONTSIZE) * 1.5)*1/2;
-            time_X  = center_screenX - MeasureText(TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE) * 1.5)*1/2;
-            txtposx =  width*1/8;
-            txtposy = height*1/4;
         }
+        center_screenX = width*1/2;
+        center_screenY = height*1/2;
+        text_win    = center_screenX - MeasureText("Congratulations, you have Won!", (FONTSIZE) * 1.5)*1/2;
+        text_lose   = center_screenX - MeasureText("Game over, yes you have lost!", (FONTSIZE) * 1.5)*1/2;
+        time_X  = center_screenX - MeasureText(TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE) * 1.5)*1/2;
+        txtposx =  width*1/8;
+        txtposy = height*1/4;
         
         ClearBackground(BLACK);
         
