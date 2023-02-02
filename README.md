@@ -5,6 +5,7 @@
 Another small project for uni. A flappy bird like side scroller, which is not finished however.
 - OLD DESCRIPTION END -
 
+WARNING: This game is currently not playable in all resolution... right now it is written for 1080p. There is also a 720p mode and you can resize the window as you want, however the actual game world still neeeds to be made resizable. Resolutions other thatn 1080p might work, however that is pure coincidence.
 
 This project is long not just a project for the university anymore. I try to make this my first ever game.
 I want to make it a side-scroller/platformer with certain levels that play like flappy bird.
