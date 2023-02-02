@@ -4,19 +4,11 @@
 #include "game.h"
 
 
-void Game(int *breite, int *hoehe, int *xverh, int *yverh){
-    int width   = *breite;
-    int height  = *hoehe;
-    int verhx   = *xverh;
-    int verhy   = *yverh;
-    int jcount  = 0;
-    int pressed_button = 1;
-    timer = 0.000000000;
-    
-    mode = 0;
+void Game(){
+    int jcount  = 0; //jump count
+    int pressed_button = 1; //first button press starts timer
     char loadedObs[MAX_OBSTACLES];
     int spacing = 0;
-    //int genspacing = 0;
 
     Color loadedObstcol[MAX_OBSTACLES] = {0};
     Rectangle loadedObstacle[MAX_OBSTACLES] = {0};
@@ -33,12 +25,9 @@ void Game(int *breite, int *hoehe, int *xverh, int *yverh){
             fscanf(level, "%c", &loadedObs[i]);
             i++;
         }while(loadedObs[i]!='.');
-/*         for(int i = 0; ; i++){
-            fscanf(level, "%c", &loadedObs[i]);
-        } */
         fclose(level);
         for (int i = 0; loadedObs[i]!='.'; i++){
-        loadedObstacle[i].width = 90;   //GetRandomValue(50, 100);
+        loadedObstacle[i].width = 90;
         if(loadedObs[i]=='_'){
            loadedObstacle[i].height = 20;
            loadedObstacle[i].y = height*1/4+loadedObstacle[i].height+20;
@@ -65,7 +54,7 @@ void Game(int *breite, int *hoehe, int *xverh, int *yverh){
         int rndVal = GetRandomValue(0, 2);
         obstacle[i].width = GetRandomValue(50, 100);
         obstacle[i].height = heightList[rndVal];
-        obstacle[i].y = height*1/4 + obstacle[i].height + yList[rndVal];// - obstacle[i].height;
+        obstacle[i].y = height*1/4 + obstacle[i].height + yList[rndVal];
         obstacle[i].x = spacing;
 
         spacing += 250;
@@ -86,11 +75,10 @@ void Game(int *breite, int *hoehe, int *xverh, int *yverh){
     
     while(!WindowShouldClose()){     
         
-        //timer start erst wenn ein key gedrückt ist
+        //timer start only after player presses a button
         if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W) || IsKeyPressed(KEY_A) || IsKeyPressed(KEY_D)){
             pressed_button = 0;
         }
-        
         if (pressed_button){
             timer = 0.0000000000;
         }
@@ -147,9 +135,12 @@ void Game(int *breite, int *hoehe, int *xverh, int *yverh){
             jcount--;
         }
 
-        /* Out of Bounds
-        if(player.x < (-558)) player.x = 1358;
-        if(player.x > 1358) player.x = (-554);*/
+        //Resizable window stuff
+        if(GetScreenWidth() != width || GetScreenHeight() != height){
+            width = GetScreenWidth();
+            height = GetScreenHeight();
+            updateWindowSizeVars(width, height);
+        }
         
         ClearBackground(BLACK);
         

@@ -6,11 +6,7 @@
 
 
 // This screen is shown whenever you press the button for "key assignment"
-void keys(int *breite, int *hoehe, int *xverh, int *yverh){
-    int width   = *breite;
-    int height  = *hoehe;
-    int verhx   = *xverh;
-    int verhy   = *yverh;
+void keys(){
 
     mode = 0;
 
@@ -21,10 +17,7 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh){
     int rectangle_height = height*3/4;
     int rectangle_quarter_width = width*3/16;
     int rectangle_quarter_height = height*3/16;
-
-    int center_screenX = width*1/2;
     int rectangle_center_line_Y = height*7/8;
-
     int txtposl = rectangleX + width*1/16;
     int txtposr = center_screenX + width*1/16;
     int txtY    = rectangleY + height*1/6;
@@ -38,6 +31,23 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh){
         }
         if(showfps > 0){
             DrawFPS(10, 10);
+        }
+
+        //Resizable window stuff
+        if(GetScreenWidth() != width || GetScreenHeight() != height){
+            width = GetScreenWidth();
+            height = GetScreenHeight();
+            updateWindowSizeVars(width, height);
+            rectangleX = width*1/8;
+            rectangleY = height*1/8;
+            rectangle_width = width*3/4;
+            rectangle_height = height*3/4;
+            rectangle_quarter_width = width*3/16;
+            rectangle_quarter_height = height*3/16;
+            rectangle_center_line_Y = height*7/8;
+            txtposl = rectangleX + width*1/16;
+            txtposr = center_screenX + width*1/16;
+            txtY    = rectangleY + height*1/6;
         }
         
         ClearBackground(BLACK);
@@ -67,11 +77,8 @@ void keys(int *breite, int *hoehe, int *xverh, int *yverh){
 }
 
 //"Save screen" This screen shows after you have decided to save your progress.
-void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestamp){
-    int width   = *breite;
-    int height  = *hoehe;
-    int verhx   = *xverh;
-    int verhy   = *yverh;
+void saveScreen(double timestamp){
+
     double printtime = timestamp;
     bool saved = false; //bool to know if saving was succesful or not, set to false by default so that we can be 100% sure that the highscore was written, if it was written.
 
@@ -81,8 +88,6 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestam
     mode = 0;
 
     //Pre calculated dimensions for buttons and texts etc.
-    int center_screenX = width*1/2;
-    int center_screenY = height*1/2;
     int button1_text_size = MeasureText("Enter) OK", FONTSIZE);
     int button1_text_X = center_screenX - button1_text_size*1/2;
     int button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
@@ -119,6 +124,19 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestam
         DrawFPS(10, 10);
     }
 
+    //Resizable window stuff
+    if(GetScreenWidth() != width || GetScreenHeight() != height){
+        width = GetScreenWidth();
+        height = GetScreenHeight();
+        updateWindowSizeVars(width, height);
+        button1_text_size = MeasureText("Enter) OK", FONTSIZE);
+        button1_text_X = center_screenX - button1_text_size*1/2;
+        button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
+        button1_Y = center_screenY - height*1/36;
+        button1_width = button1_text_size + width*1/18;
+        button1_height = FONTSIZE + height*1/18;
+    }
+
     ClearBackground(BLACK);
 
     if(saved == true){
@@ -142,19 +160,14 @@ void saveScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timestam
 }
 
 // This screen shows when you won or lost a game.
-void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timer, bool victory){
+void VictoryScreen(double timer, bool victory){
     double timestamp = timer;
-    int width   = *breite;
-    int height  = *hoehe;
-    int verhx   = *xverh;
-    int verhy   = *yverh;
 
     mode = 0;
 
     //Pre calculated dimensions for buttons and texts etc.
     int center_screenX = width*1/2;
     int center_screenY = height*1/2;
-    
     int text_win    = center_screenX - MeasureText("Congratulations, you have Won!", (FONTSIZE) * 1.5)*1/2;
     int text_lose   = center_screenX - MeasureText("Game over, yes you have lost!", (FONTSIZE) * 1.5)*1/2;
     int time_X  = center_screenX - MeasureText(TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE) * 1.5)*1/2;
@@ -168,7 +181,7 @@ void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timer
             mode = 1;
             return;
         }else if(IsKeyPressed(KEY_TWO)){
-            keys(&width, &height, &verhx, &verhy);
+            keys();
         }
         if(victory == true){
             if(IsKeyPressed(KEY_THREE)){
@@ -178,6 +191,20 @@ void VictoryScreen(int *breite, int *hoehe, int *xverh, int *yverh, double timer
         }
 
         BeginDrawing();
+
+        //Resizable window stuff
+        if(GetScreenWidth() != width || GetScreenHeight() != height){
+            width = GetScreenWidth();
+            height = GetScreenHeight();
+            updateWindowSizeVars(width, height);
+            center_screenX = width*1/2;
+            center_screenY = height*1/2;
+            text_win    = center_screenX - MeasureText("Congratulations, you have Won!", (FONTSIZE) * 1.5)*1/2;
+            text_lose   = center_screenX - MeasureText("Game over, yes you have lost!", (FONTSIZE) * 1.5)*1/2;
+            time_X  = center_screenX - MeasureText(TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE) * 1.5)*1/2;
+            txtposx =  width*1/8;
+            txtposy = height*1/4;
+        }
         
         ClearBackground(BLACK);
         

@@ -3,18 +3,12 @@
 #include "messages.h"
 
 //"Failed to load level" screen. Shows if the program fails to find, read or just load the level.txt level file.
-void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh){
-    int width   = *breite;
-    int height  = *hoehe;
-    int verhx   = *xverh;
-    int verhy   = *yverh;
+void messageLoadFail(){
 
     mode = 0;
     load = 0;
 
     //Pre calculated dimensions for buttons and texts etc.
-    int center_screenX = width*1/2;
-    int center_screenY = height*1/2;
     int button1_text_size = MeasureText("Enter) OK", FONTSIZE);
     int button1_text_X = center_screenX - button1_text_size*1/2;
     int button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
@@ -34,6 +28,19 @@ void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh){
             DrawFPS(10, 10);
         }
 
+        //Resizable window stuff
+        if(GetScreenWidth() != width || GetScreenHeight() != height){
+            width = GetScreenWidth();
+            height = GetScreenHeight();
+            updateWindowSizeVars(width, height);
+            button1_text_size = MeasureText("Enter) OK", FONTSIZE);
+            button1_text_X = center_screenX - button1_text_size*1/2;
+            button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
+            button1_Y = center_screenY - height*1/36;
+            button1_width = button1_text_size + width*1/18;
+            button1_height = FONTSIZE + height*1/18;
+        }
+
         ClearBackground(BLACK);
 
         DrawText("ERROR: Could not load Level.txt", center_screenX - MeasureText("ERROR: Could not load Level.txt", (FONTSIZE) * 1.5)*1/2, height*1/4, (FONTSIZE) * 1.5, RED);
@@ -47,19 +54,12 @@ void messageLoadFail(int *breite, int *hoehe, int *xverh, int *yverh){
 }
 
 //"Load level" screen. Asks you if you want to load a level from the level.txt file or to generate one.
-void messageLoad(int *breite, int *hoehe, int *xverh, int *yverh){
-    int width   = *breite;
-    int height  = *hoehe;
-    int verhx   = *xverh;
-    int verhy   = *yverh;
+void messageLoad(){
 
     mode = 0;
     load = 0;
     
     //Pre calculated dimensions for buttons and texts etc.
-    int center_screenX = width*1/2;
-    int center_screenY = height*1/2;
-    
     int text    = center_screenX - MeasureText("Do you want to Load a Level or generate one?", (FONTSIZE) * 1.5)*1/2;
     int txtposx =  width*1/8;
     int txtposy = height*1/3;
@@ -70,7 +70,7 @@ void messageLoad(int *breite, int *hoehe, int *xverh, int *yverh){
             load = 1;
             level = fopen("level.txt", "r");
             if(level == NULL){
-            messageLoadFail(&width, &height, &verhx, &verhy);
+            messageLoadFail();
             load = 0;
             }
             return;
@@ -86,6 +86,16 @@ void messageLoad(int *breite, int *hoehe, int *xverh, int *yverh){
         }
         if(showfps > 0){
             DrawFPS(10, 10);
+        }
+
+        //Resizable window stuff
+        if(GetScreenWidth() != width || GetScreenHeight() != height){
+            width = GetScreenWidth();
+            height = GetScreenHeight();
+            updateWindowSizeVars(width, height);
+            text    = center_screenX - MeasureText("Do you want to Load a Level or generate one?", (FONTSIZE) * 1.5)*1/2;
+            txtposx =  width*1/8;
+            txtposy = height*1/3;
         }
 
         ClearBackground(BLACK);
