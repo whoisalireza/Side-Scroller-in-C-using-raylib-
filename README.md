@@ -12,8 +12,7 @@ I want to make it a side-scroller/platformer with certain levels that play like 
 
 Right now it is not even in alpha, there will be a lot of stuff added in the future...
 
-To run this game, download or clone this repository, open a command prompt in the directory where you saved this project,
-and then run "mingw32-make".
+To run this game, download or clone this repository, and just double click on the game.exe file. However, if your antivirus goes off or you just want to build the .exe yourself, open a command prompt in the directory where you saved this project, and then run "mingw32-make".
 
 This should work for Windows users, Linux users should just run "make" but I dont know
 if this project even works on Linux/UNIX based systems.
