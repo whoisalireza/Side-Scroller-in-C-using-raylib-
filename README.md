@@ -25,7 +25,7 @@ if this project even works on Linux/UNIX based systems.
 
 - " _ " = low block
 
-- " . " = win block (neededs to be present and touched, otherwise game can not finish)
+- " . " = win block (needs to be present and touched, otherwise game can not finish)
 
 You can create your own level which by default supports up to 1000 blocks, anything above that will be ignored by the game
 because MAX_OBSTACLES is set to 1000. You can edit that how you want tho lol.
