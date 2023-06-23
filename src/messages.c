@@ -33,13 +33,14 @@ void messageLoadFail(){
             width = GetScreenWidth();
             height = GetScreenHeight();
             updateWindowSizeVars(width, height);
+            button1_text_size = MeasureText("Enter) OK", FONTSIZE);
+            button1_text_X = center_screenX - button1_text_size*1/2;
+            button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
+            button1_Y = center_screenY - height*1/36;
+            button1_width = button1_text_size + width*1/18;
+            button1_height = FONTSIZE + height*1/18;
         }
-        button1_text_size = MeasureText("Enter) OK", FONTSIZE);
-        button1_text_X = center_screenX - button1_text_size*1/2;
-        button1_X = center_screenX - button1_text_size*1/2 - width*1/36;
-        button1_Y = center_screenY - height*1/36;
-        button1_width = button1_text_size + width*1/18;
-        button1_height = FONTSIZE + height*1/18;
+
 
         ClearBackground(BLACK);
 
@@ -70,8 +71,8 @@ void messageLoad(){
             load = 1;
             level = fopen("level.txt", "r");
             if(level == NULL){
-            messageLoadFail();
-            load = 0;
+                messageLoadFail();
+                load = 0;
             }
             return;
         }else if(IsKeyPressed(KEY_N)){
@@ -93,10 +94,11 @@ void messageLoad(){
             width = GetScreenWidth();
             height = GetScreenHeight();
             updateWindowSizeVars(width, height);
+            text    = center_screenX - MeasureText("Do you want to Load a Level or generate one?", (FONTSIZE) * 1.5)*1/2;
+            txtposx =  width*1/8;
+            txtposy = height*1/3;
         }
-        text    = center_screenX - MeasureText("Do you want to Load a Level or generate one?", (FONTSIZE) * 1.5)*1/2;
-        txtposx =  width*1/8;
-        txtposy = height*1/3;
+        
 
         ClearBackground(BLACK);
         DrawText("Do you want to Load a Level or generate one?", text, txtposy, (FONTSIZE) * 1.5, PURPLE);

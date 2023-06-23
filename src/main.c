@@ -9,7 +9,6 @@
 #include "messages.h"
 
 // TODO
-//- Clean the pre calculated standardization and values, since they have to be calculated in the loop anyway because of resizability...
 //- Standardize the game world...
 //- Made the messageLoad() function end only when Y) or N) is selected. However, hitting ESC before Y) or N) is still a problem as it is with the whole game...
 //- Fix button input bufferings
@@ -19,7 +18,7 @@
 #define MAX_OBSTACLES 1000
 #define MAX_GENOBSTACLES 10
 
-// GLOBALS
+// ####################################### GLOBALS #######################################
 int width = 1280;
 int height = 720;
 int center_screenX = 640;
@@ -44,11 +43,13 @@ void updateWindowSizeVars(int w, int h){
 }
 
 
+// ####################################### MAIN #######################################
+
 int main(){
     
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(width, height, "SideScroller v0.1 Alpha");
-    
+    InitWindow(width, height, "SideScroller v0.2 Alpha");
+
     SetTargetFPS(fps);
 
     //Pre calculated dimensions for buttons and texts etc.
@@ -122,11 +123,10 @@ int main(){
             width = GetScreenWidth();
             height = GetScreenHeight();
             updateWindowSizeVars(width, height);
+            text    = center_screenX - MeasureText("SideScroller v0.1 Alpha", (FONTSIZE) * 1.5)*1/2;
+            txtposx =  width*1/8;
+            txtposy = height*1/3;
         }
-        text    = center_screenX - MeasureText("SideScroller v0.1 Alpha", (FONTSIZE) * 1.5)*1/2;
-        txtposx =  width*1/8;
-        txtposy = height*1/3;
-
         
         //Text to be drawn
         ClearBackground(BLACK);
