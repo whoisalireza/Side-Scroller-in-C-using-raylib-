@@ -7,9 +7,9 @@
 #include "game.h"
 #include "screens.h"
 #include "messages.h"
+#include "load.h"
 
 // TODO
-//- Standardize the game world...
 //- Made the messageLoad() function end only when Y) or N) is selected. However, hitting ESC before Y) or N) is still a problem as it is with the whole game...
 //- Fix button input bufferings
 
@@ -49,6 +49,7 @@ int main(){
     
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, "SideScroller v0.2 Alpha");
+    //SetWindowMinSize(320, 240);
 
     SetTargetFPS(fps);
 

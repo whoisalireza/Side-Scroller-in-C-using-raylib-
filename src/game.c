@@ -1,77 +1,35 @@
-
 #include <stdio.h>
 #include "raylib.h"
 #include "game.h"
+#include "load.h"
 
 
 void Game(){
     int jcount  = 0; //jump count
     int pressed_button = 1; //first button press starts timer
-    char loadedObs[MAX_OBSTACLES];
     int spacing = 0;
 
+    char loadedObs[MAX_OBSTACLES];
     Color loadedObstcol[MAX_OBSTACLES] = {0};
     Rectangle loadedObstacle[MAX_OBSTACLES] = {0};
-
     Color obstcol[MAX_GENOBSTACLES] = {0};
-    Rectangle player = { -558, 280, 40, 40 };
     Rectangle obstacle[MAX_GENOBSTACLES] = {0};
+
+    Texture2D playerImage = LoadTexture("resources/player.png");
+    playerImage.width = width*0.1;
+    playerImage.height = height*0.2;
+    Rectangle player = { -558, 280, playerImage.width, playerImage.height};
     int oldplayerx = player.x;
     int oldplayery = player.y;
-
-    if(load == 1){
-        int i = 0;
-        do{
-            fscanf(level, "%c", &loadedObs[i]);
-            i++;
-        }while(loadedObs[i]!='.');
-        fclose(level);
-        for (int i = 0; loadedObs[i]!='.'; i++){
-        loadedObstacle[i].width = 90;
-        if(loadedObs[i]=='_'){
-           loadedObstacle[i].height = 20;
-           loadedObstacle[i].y = height*1/4+loadedObstacle[i].height+20;
-        }else if(loadedObs[i]=='-'){
-            loadedObstacle[i].height = 50;
-            loadedObstacle[i].y =  height*1/4+loadedObstacle[i].height-65;
-        }else if(loadedObs[i]=='*'){
-            loadedObstacle[i].height = 100;
-            loadedObstacle[i].y = height*1/4+loadedObstacle[i].height-200;
-        }
-        loadedObstacle[i].x = spacing;
-
-        spacing += 250;
-        spacing += loadedObstacle[i].width;
-
-        loadedObstcol[i] = (Color){ GetRandomValue(120, 240), GetRandomValue(120, 240), GetRandomValue(120, 250), 255 };
-        }
-    }else{
-    
-    int heightList[] = {20, 50, 100};
-    int yList[] = {20, -65, -200};
-
-    for (int i = 0; i < MAX_GENOBSTACLES; i++){
-        int rndVal = GetRandomValue(0, 2);
-        obstacle[i].width = GetRandomValue(50, 100);
-        obstacle[i].height = heightList[rndVal];
-        obstacle[i].y = height*1/4 + obstacle[i].height + yList[rndVal];
-        obstacle[i].x = spacing;
-
-        spacing += 250;
-        spacing += obstacle[i].width;
-
-        obstcol[i] = (Color){ GetRandomValue(120, 240), GetRandomValue(120, 240), GetRandomValue(120, 250), 255 };
-    }
-    }
     
     Rectangle finish = {spacing, height*1/8, width*1/8, height*1/8};
     
     Camera2D camera = { 0 };
-    camera.target   = (Vector2){ oldplayerx + 20, oldplayery + 20 };
     camera.offset   = (Vector2){ width/2, height/2 };
     camera.rotation = 0.0f;
     camera.zoom     = 1.0f;
     
+    loadGame(loadedObs, loadedObstcol, loadedObstacle, obstacle, obstcol, &spacing);
     
     while(!WindowShouldClose()){     
         
@@ -83,7 +41,7 @@ void Game(){
             timer = 0.0000000000;
         }
         
-        //makes camera focussing player.x
+         //makes camera focussing player.x
         camera.target = (Vector2){ player.x + 20, oldplayery + 20};
         
         if(load == 1){
@@ -106,7 +64,7 @@ void Game(){
         if(CheckCollisionRecs(player, finish) == true){
             mode = 4;
             return;
-        }
+        } 
         
         BeginDrawing();
         
@@ -121,7 +79,7 @@ void Game(){
         }
 
 
-        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) player.x += 8;
+         if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) player.x += 8;
         if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) player.x -= 8;
         if(jcount == 0){
             if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) jcount = 50;
@@ -133,13 +91,24 @@ void Game(){
         else if (jcount > 0 && jcount <= 25){
             player.y += 4;
             jcount--;
-        }
+        } 
 
         //Resizable window stuff
         if(GetScreenWidth() != width || GetScreenHeight() != height){
             width = GetScreenWidth();
             height = GetScreenHeight();
             updateWindowSizeVars(width, height);
+            for (int i = 0; loadedObs[i]; i++){
+                loadedObstacle[i].width = width*1/8;
+                loadedObstacle[i].height = height*1/8;
+            }
+            finish.width = width*1/8;
+            finish.height = height*1/8;
+            playerImage.width = width*0.1;
+            playerImage.height = height*0.2;
+            player.width = playerImage.width;
+            player.height = playerImage.height;
+            camera.offset   = (Vector2){ width/2, height/2 };
         }
         
         ClearBackground(BLACK);
@@ -151,8 +120,9 @@ void Game(){
                 }else{
                     for (int i = 0; i < MAX_GENOBSTACLES; i++) DrawRectangleRec(obstacle[i], obstcol[i]);
                 }
-                DrawRectangleRec(player, RED);
-                
+
+                DrawTexture(playerImage, player.x, player.y, WHITE);
+            
                 DrawRectangleRec(finish, WHITE);
                 
                 DrawText("Finish", spacing + width*1/32, height*21/128, FONTSIZE, BLACK);
