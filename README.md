@@ -1,5 +1,7 @@
 # Side-Scroller-in-C-using-raylib-
 
+#THIS GAME IS NOT IN A PLAYABLE STATE RIGHT NOW
+
 - OLD DESCRIPTION BEGIN -
 
 Another small project for uni. A flappy bird like side scroller, which is not finished however.
