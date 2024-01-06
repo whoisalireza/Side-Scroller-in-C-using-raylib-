@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "raylib.h"
 #include "messages.h"
+#include "resizability.h"
 
 //"Failed to load level" screen. Shows if the program fails to find, read or just load the level.txt level file.
 void messageLoadFail(){

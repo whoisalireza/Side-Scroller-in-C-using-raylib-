@@ -32,12 +32,12 @@ void loadGame(char loadedObs[], Color loadedObstcol[], Rectangle loadedObstacle[
         }
     }else{
     
-    int heightList[] = {20, 50, 100};
+    int heightList[] = {height*0.0185, height*0.0462, height*0.0925};
     int yList[] = {20, -65, -200};
 
     for (int i = 0; i < MAX_GENOBSTACLES; i++){
         int rndVal = GetRandomValue(0, 2);
-        obstacle[i].width = GetRandomValue(50, 100);
+        obstacle[i].width = GetRandomValue(width*0.026, width*0.052);
         obstacle[i].height = heightList[rndVal];
         obstacle[i].y = height*1/4 + obstacle[i].height + yList[rndVal];
         obstacle[i].x = *spacing;

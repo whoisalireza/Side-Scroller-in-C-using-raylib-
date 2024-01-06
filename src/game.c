@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "game.h"
 #include "load.h"
+#include "resizability.h"
 
 
 void Game(){
@@ -18,11 +19,9 @@ void Game(){
     Texture2D playerImage = LoadTexture("resources/player.png");
     playerImage.width = width*0.1;
     playerImage.height = height*0.2;
-    Rectangle player = { -558, 280, playerImage.width, playerImage.height};
-    int oldplayerx = player.x;
-    int oldplayery = player.y;
-    
-    Rectangle finish = {spacing, height*1/8, width*1/8, height*1/8};
+    Rectangle player = { -550, 280, playerImage.width, playerImage.height};
+
+    int cameraYOffset = player.y;
     
     Camera2D camera = { 0 };
     camera.offset   = (Vector2){ width/2, height/2 };
@@ -30,6 +29,8 @@ void Game(){
     camera.zoom     = 1.0f;
     
     loadGame(loadedObs, loadedObstcol, loadedObstacle, obstacle, obstcol, &spacing);
+    Rectangle finish = {spacing, height*1/8, width*1/8, height*1/8};
+    camera.target = (Vector2){ player.x +100, /*player.y*/ cameraYOffset + 20};
     
     while(!WindowShouldClose()){     
         
@@ -42,7 +43,9 @@ void Game(){
         }
         
          //makes camera focussing player.x
-        camera.target = (Vector2){ player.x + 20, oldplayery + 20};
+        camera.target = (Vector2){ player.x + 100, /*player.y*/ cameraYOffset + 20};
+        //if(player.x > width){
+          //  camera.target = (Vector2){ player.x +500, /*player.y*/ cameraYOffset + 20};
         
         if(load == 1){
             for(int i = 0; i < MAX_OBSTACLES; i++){
@@ -68,8 +71,9 @@ void Game(){
         
         BeginDrawing();
         
-        //show players x position in lower left corner (complete left is zero)
-        DrawText(TextFormat("Time = %f", ((float)timer)), 10, 1000, FONTSIZE, PINK); 
+        //Show Player.x and Timer
+        DrawText(TextFormat("Player.x : %f", player.x), width*0.7, height*0.92, FONTSIZE, PINK);
+        DrawText(TextFormat("Time : %f", ((float)timer)), width*0.02, height*0.92, FONTSIZE, PINK);
 
         if(IsKeyPressed(KEY_F1)){
             showfps *= (-1);
@@ -79,7 +83,7 @@ void Game(){
         }
 
 
-         if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) player.x += 8;
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) player.x += 8;
         if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) player.x -= 8;
         if(jcount == 0){
             if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) jcount = 50;
@@ -101,6 +105,10 @@ void Game(){
             for (int i = 0; loadedObs[i]; i++){
                 loadedObstacle[i].width = width*1/8;
                 loadedObstacle[i].height = height*1/8;
+            }
+            for (int i = 0; i < MAX_GENOBSTACLES; i++){
+                obstacle[i].width = width*1/8;
+                obstacle[i].height = height*1/8;
             }
             finish.width = width*1/8;
             finish.height = height*1/8;

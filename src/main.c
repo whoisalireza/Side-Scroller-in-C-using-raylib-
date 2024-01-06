@@ -2,14 +2,16 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <time.h>
+//#include <time.h>
 #include "sysinfoapi.h"
 #include "game.h"
 #include "screens.h"
 #include "messages.h"
 #include "load.h"
+#include "resizability.h"
 
 // TODO
+//- Actual resizability is basically fixed, tho it isnt possible to actually fix it in this state, since the game relies on random generated values for the sizes of objects. Thus I need to get this game to another level: Making it an actual side scroller with pre defined levels, no random stuff!
 //- Made the messageLoad() function end only when Y) or N) is selected. However, hitting ESC before Y) or N) is still a problem as it is with the whole game...
 //- Fix button input bufferings
 
@@ -31,16 +33,6 @@ float timer = 0.00000000;
 
 FILE *level;
 FILE *output;
-
-//GLOBAL Functions
-
-//Updating the variables for the window size. All texts, boxes etc. sizes have to be updated after this function and setWindowSize() has to be called.
-void updateWindowSizeVars(int w, int h){
-    width  = w;
-    height = h;
-    center_screenX = width*1/2;
-    center_screenY = height*1/2;
-}
 
 
 // ####################################### MAIN #######################################

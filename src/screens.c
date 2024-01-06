@@ -1,8 +1,9 @@
-
 #include <stdio.h>
 #include <string.h>
 #include "raylib.h"
 #include "screens.h"
+#include <time.h>
+#include "resizability.h"
 
 
 // This screen is shown whenever you press the button for "key assignment"
@@ -16,7 +17,7 @@ void keys(){
     int rectangle_width = width*3/4;
     int rectangle_height = height*3/4;
     int rectangle_quarter_width = width*3/16;
-    int rectangle_quarter_height = height*3/16;
+    //int rectangle_quarter_height = height*3/16;
     int rectangle_center_line_Y = height*7/8;
     int txtposl = rectangleX + width*1/16;
     int txtposr = center_screenX + width*1/16;
@@ -43,7 +44,7 @@ void keys(){
             rectangle_width = width*3/4;
             rectangle_height = height*3/4;
             rectangle_quarter_width = width*3/16;
-            rectangle_quarter_height = height*3/16;
+            //rectangle_quarter_height = height*3/16;
             rectangle_center_line_Y = height*7/8;
             txtposl = rectangleX + width*1/16;
             txtposr = center_screenX + width*1/16;
@@ -106,7 +107,7 @@ void saveScreen(double timestamp){
     printf("%s", asctime (loc_time));
     char *datetime = asctime(loc_time);
 
-    if(output = fopen("Highscores.txt", "a")){ //check to see if the file can be opened
+    if((output = fopen("Highscores.txt", "a")) != NULL){ //check to see if the file can be opened
         fprintf(output, "%s Your Time: %lf\n\n\n", datetime, printtime);
         fclose(output);
         saved = true; //highscore was  written, close the file and set the bool to true
@@ -168,7 +169,7 @@ void VictoryScreen(double timer, bool victory){
 
     //Pre calculated dimensions for buttons and texts etc.
     int center_screenX = width*1/2;
-    int center_screenY = height*1/2;
+    //int center_screenY = height*1/2;
     int text_win    = center_screenX - MeasureText("Congratulations, you have Won!", (FONTSIZE) * 1.5)*1/2;
     int text_lose   = center_screenX - MeasureText("Game over, yes you have lost!", (FONTSIZE) * 1.5)*1/2;
     int time_X  = center_screenX - MeasureText(TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE) * 1.5)*1/2;
