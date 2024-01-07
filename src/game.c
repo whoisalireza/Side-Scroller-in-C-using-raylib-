@@ -16,10 +16,10 @@ void Game(){
     Color obstcol[MAX_GENOBSTACLES] = {0};
     Rectangle obstacle[MAX_GENOBSTACLES] = {0};
 
-    Texture2D playerImage = LoadTexture("resources/player.png");
-    playerImage.width = width*0.1;
-    playerImage.height = height*0.2;
-    Rectangle player = { -550, 280, playerImage.width, playerImage.height};
+    //Texture2D playerImage = LoadTexture("resources/player.png");
+    //playerImage.width = width*0.1;
+    //playerImage.height = height*0.2;
+    Rectangle player = {width*(-0.286), height*0.259, width*0.02, height*0.037};
 
     int cameraYOffset = player.y;
     
@@ -112,10 +112,10 @@ void Game(){
             }
             finish.width = width*1/8;
             finish.height = height*1/8;
-            playerImage.width = width*0.1;
-            playerImage.height = height*0.2;
-            player.width = playerImage.width;
-            player.height = playerImage.height;
+            //playerImage.width = width*0.1;
+            //playerImage.height = height*0.2;
+            player.width = width*0.02;//playerImage.width;
+            player.height = height*0.037;//playerImage.height;
             camera.offset   = (Vector2){ width/2, height/2 };
         }
         
@@ -129,7 +129,8 @@ void Game(){
                     for (int i = 0; i < MAX_GENOBSTACLES; i++) DrawRectangleRec(obstacle[i], obstcol[i]);
                 }
 
-                DrawTexture(playerImage, player.x, player.y, WHITE);
+                DrawRectangleRec(player, RED);
+                //DrawTexture(playerImage, player.x, player.y, WHITE);
             
                 DrawRectangleRec(finish, WHITE);
                 
