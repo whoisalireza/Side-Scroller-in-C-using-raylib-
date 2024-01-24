@@ -3,7 +3,6 @@
 #include "raylib.h"
 #include "screens.h"
 #include <time.h>
-#include "resizability.h"
 
 #include "game.h"
 
@@ -31,23 +30,6 @@ void keys() {
         if (IsKeyPressed(KEY_F1)) { state->showfps *= (-1); }
         if (state->showfps > 0) { DrawFPS(10, 10); }
 
-        // Resizable window stuff
-        if (GetScreenWidth() != state->width || GetScreenHeight() != state->height) {
-            state->width = GetScreenWidth();
-            state->height = GetScreenHeight();
-            updateWindowSizeVars(state->width, state->height);
-            rectangleX = state->width * 1 / 8;
-            rectangleY = state->height * 1 / 8;
-            rectangle_width = state->width * 3 / 4;
-            rectangle_height = state->height * 3 / 4;
-            rectangle_quarter_width = state->width * 3 / 16;
-            // rectangle_quarter_height = state->height*3/16;
-            rectangle_center_line_Y = state->height * 7 / 8;
-            txtposl = rectangleX + state->width * 1 / 16;
-            txtposr = state->center_screenX + state->width * 1 / 16;
-            txtY = rectangleY + state->height * 1 / 6;
-        }
-
         ClearBackground(BLACK);
 
         DrawRectangleLines(
@@ -60,8 +42,6 @@ void keys() {
             rectangle_center_line_Y,
             WHITE
         );
-        // DrawLine(txtpos, (height*1/2)-(height*3/8), txtpos, (height*1/2)+(height*3/8),
-        // BLACK);
 
         // Linke Seite (Funktionen)
         DrawText(
@@ -146,20 +126,6 @@ void saveScreen(double timestamp) {
         if (IsKeyPressed(KEY_F1)) { state->showfps *= (-1); }
         if (state->showfps > 0) { DrawFPS(10, 10); }
 
-        // Resizable window stuff
-        if (GetScreenWidth() != state->width || GetScreenHeight() != state->height) {
-            state->width = GetScreenWidth();
-            state->height = GetScreenHeight();
-            updateWindowSizeVars(state->width, state->height);
-            button1_text_size = MeasureText("Enter) OK", FONTSIZE);
-            button1_text_X = state->center_screenX - button1_text_size * 1 / 2;
-            button1_X =
-                state->center_screenX - button1_text_size * 1 / 2 - state->width * 1 / 36;
-            button1_Y = state->center_screenY - state->height * 1 / 36;
-            button1_width = button1_text_size + state->width * 1 / 18;
-            button1_height = FONTSIZE + state->height * 1 / 18;
-        }
-
         ClearBackground(BLACK);
 
         if (saved == true) {
@@ -218,7 +184,7 @@ void VictoryScreen(double timer, bool victory) {
 
     // Pre calculated dimensions for buttons and texts etc.
     int center_screenX = state->width * 1 / 2;
-    // int center_screenY = height*1/2;
+    //int center_screenY = state->height*1/2;
     int text_win = state->center_screenX -
                    MeasureText("Congratulations, you have Won!", (FONTSIZE)*1.5) * 1 / 2;
     int text_lose = state->center_screenX -
@@ -246,28 +212,6 @@ void VictoryScreen(double timer, bool victory) {
         }
 
         BeginDrawing();
-
-        // Resizable window stuff
-        if (GetScreenWidth() != state->width || GetScreenHeight() != state->height) {
-            state->width = GetScreenWidth();
-            state->height = GetScreenHeight();
-            updateWindowSizeVars(state->width, state->height);
-            state->center_screenX = state->width * 1 / 2;
-            state->center_screenY = state->height * 1 / 2;
-            text_win =
-                state->center_screenX -
-                MeasureText("Congratulations, you have Won!", (FONTSIZE)*1.5) * 1 / 2;
-            text_lose =
-                state->center_screenX -
-                MeasureText("Game over, yes you have lost!", (FONTSIZE)*1.5) * 1 / 2;
-            time_X = state->center_screenX -
-                     MeasureText(
-                         TextFormat("Time = %lf", ((double)timestamp)), (FONTSIZE)*1.5
-                     ) * 1 /
-                         2;
-            txtposx = state->width * 1 / 8;
-            txtposy = state->height * 1 / 4;
-        }
 
         ClearBackground(BLACK);
 
