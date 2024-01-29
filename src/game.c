@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "game.h"
 #include "load.h"
+#include "defines.h"
 
 
 void Game(state) {

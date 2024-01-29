@@ -3,8 +3,8 @@
 #include "raylib.h"
 #include "screens.h"
 #include <time.h>
-
 #include "game.h"
+#include "defines.h"
 
 // This screen is shown whenever you press the button for "key assignment"
 void keys() {

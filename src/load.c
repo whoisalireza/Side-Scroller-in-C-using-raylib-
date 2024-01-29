@@ -2,6 +2,7 @@
 #include "game.h"
 #include "raylib.h"
 #include "load.h"
+#include "defines.h"
 
 void loadGame(
     char      loadedObs[],

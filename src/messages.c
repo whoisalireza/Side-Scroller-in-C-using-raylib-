@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "messages.h"
 #include "game.h"
+#include "defines.h"
 
 //"Failed to load level" screen. Shows if the program fails to find, read or just load the
 // level.txt level file.
