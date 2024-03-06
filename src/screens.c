@@ -5,6 +5,7 @@
 #include <time.h>
 #include "game.h"
 #include "defines.h"
+#include "gamestate.h"
 
 // This screen is shown whenever you press the button for "key assignment"
 void keys() {
@@ -78,17 +79,16 @@ void keys() {
 }
 
 //"Save screen" This screen shows after you have decided to save your progress.
-void saveScreen(double timestamp) {
+void saveScreen() {
+    struct GameState* state = GameState_get_instance();
 
-    double printtime = timestamp;
+    double printtime = state->timer;
     bool   saved = false; // bool to know if saving was succesful or not, set to false by
                           // default so that we can be 100% sure that the highscore was
                           // written, if it was written.
 
     time_t     curtime;
     struct tm* loc_time;
-
-    struct GameState* state = GameState_get_instance();
 
     // Pre calculated dimensions for buttons and texts etc.
     int button1_text_size = MeasureText("Enter) OK", FONTSIZE);
@@ -177,10 +177,10 @@ void saveScreen(double timestamp) {
 }
 
 // This screen shows when you won or lost a game.
-void VictoryScreen(double timer, bool victory) {
-    double timestamp = timer;
-
+void VictoryScreen(bool victory) {
     struct GameState* state = GameState_get_instance();
+    
+    double timestamp = state->timer;
 
     // Pre calculated dimensions for buttons and texts etc.
     int center_screenX = state->width * 1 / 2;

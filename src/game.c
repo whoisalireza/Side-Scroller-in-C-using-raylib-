@@ -3,6 +3,7 @@
 #include "game.h"
 #include "load.h"
 #include "defines.h"
+#include "gamestate.h"
 
 
 void Game(state) {

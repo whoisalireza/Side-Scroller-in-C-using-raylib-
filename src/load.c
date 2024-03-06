@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "load.h"
 #include "defines.h"
+#include "gamestate.h"
 
 void loadGame(
     char      loadedObs[],
@@ -13,6 +14,7 @@ void loadGame(
     int*      spacing
 ) {
     struct GameState* state = GameState_get_instance();
+    
     if (state->load == 1) {
         int i = 0;
         do {

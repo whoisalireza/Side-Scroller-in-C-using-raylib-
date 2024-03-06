@@ -7,6 +7,7 @@
 #include "screens.h"
 #include "messages.h"
 #include "load.h"
+#include "gamestate.h"
 
 // TODO
 //- Made the messageLoad() function end only when Y) or N) is selected. However, hitting
@@ -52,33 +53,33 @@ int main() {
             case GAME_MODE_GAME:
                 // mode = 1:
                 // Player chose to start the game
-                messageLoad(*state);
-                Game(*state);
+                messageLoad();
+                Game();
                 continue;
             case GAME_MODE_OPTIONS:
                 // mode = 2:
                 // Player wishes to view the controls, implemented througg the keys()
                 // function
-                keys(*state);
+                keys();
                 continue;
             case GAME_MODE_DEAD:
                 // mode = 3:
                 // The player failed/died etc. and now the game over screen will be
                 // displayed. Implemented through a single VictoryScreen() function with
                 // the last boolean paramter set to false: Victory = false.
-                VictoryScreen(*state, timer, false);
+                VictoryScreen(false);
                 continue;
             case GAME_MODE_VICTORY:
                 // mode = 4:
                 // Same as above but with the boolean set to true: Victory = true.
                 // Thus a victory screen is presented instead of a game over screen.
-                VictoryScreen(*state, timer, true);
+                VictoryScreen(true);
                 continue;
             case GAME_MODE_SAVE_SCREEN:
                 // mode = 5:
                 // The save screen, displayed if the player decides to save their
                 // highscore after the VictoryScreen().
-                saveScreen(*state, timer);
+                saveScreen();
                 continue;
         }
 

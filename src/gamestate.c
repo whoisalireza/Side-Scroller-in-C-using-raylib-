@@ -1,30 +1,7 @@
-#include <stdio.h>
 #include "raylib.h"
 #include "defines.h"
 #include "gamestate.h"
 
-enum GAME_MODE {
-    GAME_MODE_MENU = 0,
-    GAME_MODE_GAME = 1,
-    GAME_MODE_OPTIONS = 2,
-    GAME_MODE_DEAD = 3,
-    GAME_MODE_VICTORY = 4,
-    GAME_MODE_SAVE_SCREEN = 5,
-};
-
-struct GameState {
-    enum GAME_MODE mode;
-    int            load;
-    float          timer;
-    int            showfps;
-    int            fps;
-    FILE*          level;
-    FILE*          output;
-    int            width;
-    int            height;
-    int            center_screenX;
-    int            center_screenY;
-};
 
 struct GameState g_game_state = {0};
 

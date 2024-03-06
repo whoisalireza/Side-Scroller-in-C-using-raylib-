@@ -2,7 +2,7 @@
 #define SCREENS_H_
 
 void keys();
-void saveScreen(double);
-void VictoryScreen(double, bool);
+void saveScreen();
+void VictoryScreen(bool);
 
 #endif
