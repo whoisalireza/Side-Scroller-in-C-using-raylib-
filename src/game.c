@@ -6,7 +6,7 @@
 #include "gamestate.h"
 
 
-void Game(state) {
+void Game() {
     int jcount = 0;         // jump count
     int pressed_button = 1; // first button press starts timer
     int spacing = 0;

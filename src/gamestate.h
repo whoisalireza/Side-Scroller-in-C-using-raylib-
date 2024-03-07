@@ -15,7 +15,7 @@ enum GAME_MODE {
 struct GameState {
     enum GAME_MODE mode;
     int            load;
-    float          timer;
+    double         timer;
     int            showfps;
     int            fps;
     FILE*          level;

@@ -174,6 +174,7 @@ void saveScreen() {
             EndDrawing();
         }
     }
+    state->mode = 0;
 }
 
 // This screen shows when you won or lost a game.
@@ -254,4 +255,5 @@ void VictoryScreen(bool victory) {
 
         EndDrawing();
     }
+    state->mode = 0;
 }
