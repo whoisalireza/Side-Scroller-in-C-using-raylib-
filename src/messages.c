@@ -105,5 +105,4 @@ void messageLoad() {
 
         EndDrawing();
     }
-    state->mode = 0;
 }
