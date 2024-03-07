@@ -52,6 +52,7 @@ void messageLoadFail() {
 
         EndDrawing();
     }
+    state->mode = 0;
 }
 
 //"Load level" screen. Asks you if you want to load a level from the level.txt file or to
@@ -104,4 +105,5 @@ void messageLoad() {
 
         EndDrawing();
     }
+    state->mode = 0;
 }

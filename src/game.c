@@ -143,4 +143,5 @@ void Game() {
         // timer
         state->timer += GetFrameTime();
     }
+    state->mode = 0;
 }
