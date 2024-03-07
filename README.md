@@ -1,7 +1,6 @@
 # Side-Scroller-in-C-using-raylib-
 
-#WARNING: Although this game is resizable, it the game becomes unplayable once resized while playing. 
-#Only way to play this game currently through the two pre-defined modes: 1080p and 720p with 720p being a lot easier.
+#UPDATE: Game is not resizable anymore.
 
 - OLD DESCRIPTION BEGIN -
 
