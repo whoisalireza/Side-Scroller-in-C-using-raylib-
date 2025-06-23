@@ -12,6 +12,8 @@ enum GAME_MODE {
     GAME_MODE_SAVE_SCREEN = 5,
 };
 
+//comment test
+
 struct GameState {
     enum GAME_MODE mode;
     int            load;
